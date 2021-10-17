@@ -37,5 +37,12 @@ Route::get('/example', function(){
     // $result = $data['results']['shop'];
     $result = array_column($data['results']['shop'], 'name');
 
-    dd($result);
+    // dd($result);
+
+    $result_array = array();
+    foreach($result as $key=>$value){
+        $result_array[$key.' 店舗名：'] = $value;
+    };
+
+    dd('"products"['.json_encode($result_array,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT).']');
 });
