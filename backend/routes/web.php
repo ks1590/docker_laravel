@@ -1,8 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PagesController;
-use App\Http\Controllers\PostsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,14 +14,35 @@ use App\Http\Controllers\PostsController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('index');
-// });
+Route::redirect('/', 'dashboard');
 
-Route::get('/', [PagesController::class, 'index']);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
-Route::resource('/blog', PostsController::class);
+require __DIR__.'/auth.php';
 
-Auth::routes();
+Route::get('/example', function(){
+    // $url = 'https://jsonplaceholder.typicode.com/todos';
 
-Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    // $response = Http::get('https://api.github.com');
+    // $data = $response->json();
+    // dd($data);
+
+    $key = env('HOTPEPPER_KEY');
+    $url = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key='.$key.'&name=あ&format=json';
+    
+    $response = Http::get($url);
+    $data = json_decode($response,true);
+    // $result = $data['results']['shop'];
+    $result = array_column($data['results']['shop'], 'name');
+
+    // dd($result);
+
+    $result_array = array();
+    foreach($result as $key=>$value){
+        $result_array[$key.' 店舗名：'] = $value;
+    };
+
+    dd('"products"['.json_encode($result_array,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT).']');
+});
