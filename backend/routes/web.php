@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect('/', 'dashboard');
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -34,15 +36,15 @@ Route::get('/example', function(){
     
     $response = Http::get($url);
     $data = json_decode($response,true);
-    // $result = $data['results']['shop'];
-    $result = array_column($data['results']['shop'], 'name');
+    $result = $data['results']['shop'];
+    // $result = array_column($data['results']['shop'], 'name');
 
-    // dd($result);
+    dd($result);
 
-    $result_array = array();
-    foreach($result as $key=>$value){
-        $result_array[$key.' 店舗名：'] = $value;
-    };
+    // $result_array = array();
+    // foreach($result as $key=>$value){
+    //     $result_array[$key.' 店舗名：'] = $value;
+    // };
 
-    dd('"products"['.json_encode($result_array,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT).']');
+    // dd('"products"['.json_encode($result_array,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT).']');
 });

@@ -17,10 +17,25 @@
 
             <!-- Email Address -->
             <div>
-                <x-label for="email" :value="__('Email')" />
+                <x-label for="username" :value="__('User Name')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                <x-input id="username" class="block mt-1 w-full" type="username" name="username" :value="old('username')" required autofocus />
             </div>
+
+
+            {{-- <div class="form-group row">
+                <label for="identity" class="col-md-4 col-form-label text-md-right">{{ __('Username or E-Mail Address') }}</label>
+
+                <div class="col-md-6">
+                    <input id="identity" type="text" class="form-control @error('identity') is-invalid @enderror" name="identity" value="{{ old('identity') }}" required autocomplete="identity" autofocus>
+
+                    @error('identity')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div> --}}
 
             <!-- Password -->
             <div class="mt-4">
