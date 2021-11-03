@@ -46,3 +46,9 @@ Route::get('/example', function(){
 
     dd('"products"['.json_encode($result_array,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT).']');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
